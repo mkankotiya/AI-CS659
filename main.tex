@@ -1,0 +1,60 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\begin{document}
+
+\begin{center}
+    {\Large \textbf{Experiment 2: Plagiarism Detection using A*}} \\
+    \vspace{0.5cm}
+    Manoj Kumar Panda -- 20251602013 \\
+    Meetkumar Kankotiya -- 20251602007 \\
+    Shrey Parikh -- 20251602017 \\
+    CS663 -- Artificial Intelligence \\
+\end{center}
+
+\section*{Abstract}
+This experiment implements plagiarism detection between two text documents by aligning their sentences using the A* search algorithm with edit distance as the alignment cost.
+
+\section*{Problem Formulation}
+We treat two documents as sequences of sentences:
+\begin{itemize}
+    \item \textbf{State:} A pair $(i,j)$, where $i$ and $j$ are indices into the two sentence sequences.
+    \item \textbf{Initial State:} $(0,0)$ (start of both documents).
+    \item \textbf{Goal State:} $(n,m)$, where $n$ and $m$ are the number of sentences.
+    \item \textbf{Actions:} Align sentences, skip a sentence in Document~1, or skip a sentence in Document~2.
+    \item \textbf{Cost:} Levenshtein distance for aligning two sentences, or a fixed penalty for skipping.
+\end{itemize}
+
+\section*{Algorithm}
+We apply the A* search algorithm with evaluation function:
+\[
+f(n) = g(n) + h(n)
+\]
+where $g(n)$ is the accumulated cost. For this experiment, we use $h(n)=0$ to guarantee admissibility.
+
+\section*{Implementation}
+The full Python implementation is available at the online compiler:
+
+\begin{center}
+\Large \url{https://github.com/mkankotiya/AI-CS659/commit/38efb83e28796fb5ce065097dc44e4bfed774fcf}
+\end{center}
+
+\section*{Results}
+The program prints the alignment cost and aligned sentences. 
+\begin{itemize}
+    \item Identical documents $\rightarrow$ cost = 0.  
+    \item Slightly modified documents $\rightarrow$ low cost.  
+    \item Different documents $\rightarrow$ high cost.  
+\end{itemize}
+
+\section*{Discussion}
+This approach works well for small to medium documents. For large texts, runtime can be reduced by better heuristics or semantic similarity measures.
+
+\section*{Conclusion}
+The A* algorithm with edit distance provides a clear and interpretable method for detecting plagiarism and aligning textual data.
+
+\end{document}
