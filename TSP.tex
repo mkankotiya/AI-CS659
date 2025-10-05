@@ -1,0 +1,60 @@
+\documentclass[a4paper,12pt]{article}  % 12pt for better readability
+\usepackage{geometry}
+\geometry{top=25mm, bottom=25mm, left=25mm, right=25mm}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setstretch{1.25}  % line spacing
+\renewcommand{\baselinestretch}{1.25}  % additional spacing
+
+\begin{document}
+
+\begin{center}
+\LARGE \textbf{Experiment 4: Jigsaw Puzzle using Simulated Annealing} \\[5mm]
+\large
+Manoj Kumar Panda - 20251602013 \\
+Meetkumar Kankotiya - 20251602007 \\
+Shrey Parikh - 20251602017 \\
+Group \\ CS663 -- Artificial Intelligence
+\end{center}
+
+\vspace{5mm}
+
+\noindent \textbf{Abstract:} \\
+This experiment addresses the solution of a simplified jigsaw puzzle using the simulated annealing algorithm. Puzzle pieces are modeled with synthetic edge signatures, and the goal is to minimize mismatched edges. The experiment demonstrates the effectiveness of stochastic optimization for NP-hard problems.
+
+\vspace{3mm}
+\noindent \textbf{Introduction:} \\
+Jigsaw puzzle solving is a classic combinatorial optimization problem. Each piece must be arranged so that the edges match correctly. Exact methods are computationally expensive for large puzzles, which motivates the use of approximate algorithms such as simulated annealing. This experiment focuses on applying SA to synthetic puzzles to observe its effectiveness and limitations.
+
+\vspace{3mm}
+\noindent \textbf{Problem Description:} \\
+Puzzle pieces are represented by synthetic edge signatures (numerical or categorical descriptors). The objective is to arrange the pieces to minimize edge mismatches. This formulation captures the essence of real-world jigsaw puzzles while remaining computationally manageable for experimentation.
+
+\vspace{3mm}
+\noindent \textbf{Algorithm:} \\
+Simulated annealing (SA) is inspired by the annealing process in metallurgy. The key steps are:
+\begin{enumerate}
+    \item Start with a random arrangement of pieces.
+    \item Evaluate the cost, i.e., the number of mismatched edges.
+    \item Swap pieces to generate a neighboring configuration.
+    \item Accept the new arrangement probabilistically based on the cost difference and current temperature.
+    \item Gradually decrease the temperature and repeat until convergence.
+\end{enumerate}
+
+\vspace{3mm}
+\noindent \textbf{Implementation:} \\
+The Python code for this experiment is available at the following URL: \\
+\begin{center}
+\url{https://github.com/mkankotiya/AI-CS659/commit/fbbeb931396446179a7b81332345f528e0ce199c}
+\end{center}
+
+\vspace{3mm}
+\noindent \textbf{Results:} \\
+For small synthetic puzzles, the algorithm reliably finds the correct arrangement or a near-optimal solution. Performance depends on the temperature schedule, the cooling rate, and the puzzle size. Observations show that SA can effectively approximate solutions even when exhaustive search is infeasible.
+
+\vspace{3mm}
+\noindent \textbf{Conclusion:} \\
+Simulated annealing provides an effective stochastic approach for approximating solutions to jigsaw puzzles. This experiment demonstrates the practical use of probabilistic optimization in NP-hard combinatorial problems and shows how even simple heuristics can achieve near-optimal solutions.
+
+\end{document}
