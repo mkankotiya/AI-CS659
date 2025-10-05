@@ -1,8 +1,5 @@
 # Rabbit Leap Problem using Breadth-First Search (BFS)
-# Author: Meet Kankotiya (Student Version)
-# Learning Objective: Model a state space search and solve using BFS
 
-# -------------------------
 # Fundamental Rules of Rabbit Leap Problem
 # -------------------------
 # 1. EW -> WE       (E and W swap when facing each other)
@@ -11,7 +8,6 @@
 # 4. E_ -> _E       (E moves right into empty space)
 # 5. EW_ -> _WE     (E jumps over W to right side)
 # Rule 3 is applied first, so the first move from EEE_WWW is -> EEEW_WW
-# -------------------------
 
 from collections import deque
 
@@ -94,3 +90,4 @@ if solution_path:
     print(f"\nTotal Moves: {len(solution_path) - 1}")
 else:
     print("❌ No Solution Found")
+
