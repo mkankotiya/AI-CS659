@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{article}  % 12pt for better readability
+\usepackage{geometry}
+\geometry{top=25mm, bottom=25mm, left=25mm, right=25mm}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setstretch{1.25}  % line spacing
+
+\begin{document}
+
+\begin{center}
+\LARGE \textbf{Experiment 5: Gaussian HMM for Financial Time Series} \\[5mm]
+\large
+Manoj Kumar Panda - 20251602013 \\
+Meetkumar Kankotiya - 20251602007 \\
+Shrey Parikh - 20251602017 \\
+Group \\ CS663 -- Artificial Intelligence
+\end{center}
+
+\vspace{5mm}
+
+\noindent \textbf{Abstract:} \\
+This experiment analyzes financial returns using Gaussian Hidden Markov Models (HMMs) to uncover hidden market regimes. By modeling returns as emissions from Gaussian distributions corresponding to different states, we can infer regime-switching behavior and analyze transition probabilities between market states.
+
+\vspace{3mm}
+\noindent \textbf{Problem:} \\
+Financial markets often switch between hidden regimes such as bull and bear markets. Gaussian HMMs provide a probabilistic framework to model this regime-switching behavior. The goal is to detect different volatility regimes from return series and understand the dynamics of state transitions.
+
+\vspace{3mm}
+\noindent \textbf{Method:} \\
+The methodology involves the following steps:
+\begin{enumerate}
+    \item Compute returns from historical price data or synthetic data.
+    \item Fit a Gaussian HMM using the Expectation-Maximization (EM) algorithm.
+    \item Infer hidden states (market regimes) from observed returns.
+    \item Analyze the transition probabilities and means of each hidden state to interpret volatility patterns.
+\end{enumerate}
+
+\vspace{3mm}
+\noindent \textbf{Implementation:} \\
+The Python code for this experiment is available at:
+\begin{center}
+\url{https://github.com/mkankotiya/AI-CS659/commit/5e31d69f6fc745c693df3c7ebd658529c70c0461}  % replace with your actual code URL
+\end{center}
+
+\vspace{3mm}
+\noindent \textbf{Results:} \\
+Using synthetic return data, the Gaussian HMM effectively separates low-variance (stable) and high-variance (volatile) regimes. The inferred transition matrix shows the probability of switching between these states, highlighting the persistence of market regimes over time.
+
+\vspace{3mm}
+\noindent \textbf{Conclusion:} \\
+Gaussian HMM provides a practical framework for modeling financial regime changes and volatility patterns. Even with synthetic data, it demonstrates the ability to uncover hidden states and analyze regime dynamics, which can be applied to real financial time series.
+
+\end{document}
