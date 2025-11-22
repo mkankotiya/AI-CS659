@@ -1,0 +1,143 @@
+\documentclass[14pt]{extreport}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{center}
+\textbf{Experiment 8: Markov Decision Processes and Dynamic Programming}\\[0.8em]
+Manoj Kumar Panda -- 20251602013\\
+Meetkumar Kankotiya -- 20251602007\\
+Shrey Parikh -- 20251602017\\[0.5em]
+Group--10\\
+CS663 -- Artificial Intelligence\\
+Indian Institute of Information Technology Vadodara (IIITV)
+\end{center}
+
+\vspace{1em}
+
+\noindent\textbf{Abstract:}\\
+This experiment studies sequential decision making in stochastic environments
+using Markov Decision Processes (MDPs) and dynamic programming techniques.
+We first apply value iteration to a stochastic gridworld to compute optimal
+state values under different reward structures. Then we model the Gbike
+bicycle rental problem as a finite MDP and solve it using policy iteration.
+The implementation demonstrates how value functions, transition dynamics and
+rewards interact to produce optimal policies.
+
+\vspace{1em}
+
+\noindent\textbf{Introduction:}\\
+In many AI problems an agent must choose actions not just for immediate
+reward, but also for their long-term consequences. Markov Decision Processes
+provide a mathematical framework in which states, actions, transition
+probabilities and rewards are explicitly modelled. Dynamic programming
+algorithms such as value iteration and policy iteration exploit the Bellman
+equations to compute optimal policies when a model of the environment is
+available. In this experiment we implement these ideas for two problems:
+a $4 \times 3$ gridworld and the Gbike bicycle rental problem.
+
+\vspace{1em}
+
+\noindent\textbf{Problem Description:}\\
+The work is divided into two parts:
+\begin{itemize}
+  \item \textbf{Stochastic Gridworld:} The agent moves on a $4 \times 3$
+  grid with two terminal states ($+1$ and $-1$) and one wall. At each step
+  the agent chooses an intended direction (up, down, left, right), but due
+  to stochasticity the actual move is the intended direction with probability
+  $0.8$ and a perpendicular move with probability $0.1$ each. Bumping into a
+  wall or boundary leaves the agent in the same state. All non-terminal states
+  receive a reward $r(s)$ per step, and terminal states provide their terminal
+  rewards. The goal is to compute the value function corresponding to the
+  optimal policy for different choices of $r(s)$.
+  \item \textbf{Gbike Bicycle Rental:} This is an adaptation of the Jack's
+  car rental problem. The manager controls two rental locations with a
+  limited number of bicycles at each. Each day, customer rental requests and
+  returns at both locations are modelled as Poisson random variables with
+  given means. Renting a bike yields a fixed positive reward, while moving
+  bikes overnight between locations incurs a cost. The state is the number
+  of bikes at each location at the end of the day, and the action is the
+  number of bikes moved from one location to the other overnight. The task
+  is to find an optimal stationary policy that maximises long-term expected
+  discounted reward. A modified version of the problem introduces one free
+  bike moved from location 1 to 2 and an extra parking cost if more than
+  ten bikes are kept at a location overnight.
+\end{itemize}
+
+\vspace{1em}
+
+\noindent\textbf{Algorithm:}\\
+For the gridworld, we use \textbf{value iteration}. For each state $s$, the
+update is
+\[
+V_{k+1}(s) = \max_a \sum_{s'} P(s' \mid s,a)\,\bigl(R(s,a,s') + \gamma V_k(s')\bigr),
+\]
+where $P(s' \mid s,a)$ is obtained from the stochastic transition model and
+$R(s,a,s')$ is the immediate reward. Iteration continues until the maximum
+change in $V(s)$ across all states falls below a small threshold. The optimal
+policy is then obtained by acting greedily with respect to the final value
+function.
+
+For the Gbike problem we use \textbf{policy iteration}. Starting from an
+initial policy, we alternate between:
+\begin{itemize}
+  \item \emph{Policy evaluation:} solving for the value function $V^\pi(s)$
+  under the current policy $\pi$ using iterative updates based on the Bellman
+  expectation equation.
+  \item \emph{Policy improvement:} for each state $s$, choosing a new action
+  $a$ that maximises the expected return
+  \[
+  q^{\pi}(s,a) = \mathbb{E}\bigl[R + \gamma V^\pi(S') \mid S=s, A=a\bigr].
+  \]
+\end{itemize}
+If the policy does not change during an improvement step, it is optimal.
+The Gbike environment uses truncated Poisson distributions to enumerate
+possible numbers of rental requests and returns at each location, and the
+expected return is computed by summing over these possibilities.
+
+\vspace{1em}
+
+\noindent\textbf{Implementation:}\\
+The complete Python implementation (gridworld value iteration, base Gbike
+policy iteration and the modified Gbike variant) for this experiment is
+available at the following URL:\\[0.3em]
+\hspace*{1em}\url{https://github.com/mkankotiya/AI-CS659/blob/main/gbike.py}
+
+\vspace{1em}
+
+\noindent\textbf{Results:}\\
+For the gridworld, different choices of the step reward $r(s)$ produce
+different optimal value functions and policies. When $r(s)$ is moderately
+negative, the agent prefers shorter paths to the positive terminal state and
+avoids unnecessary wandering. As $r(s)$ becomes more negative, the agent
+tries to terminate episodes quickly even if that increases the chance of
+reaching the $-1$ terminal state. When $r(s)$ is positive, the agent may
+prefer to cycle in the grid rather than terminate, since continuing to move
+yields more cumulative positive reward.
+
+In the Gbike base problem, policy iteration converges to a stable policy that
+balances moving bicycles overnight against expected rental income. Typically,
+the optimal policy shifts bikes from the location with lower expected demand
+to the one with higher demand, but avoids excessive movement because of the
+associated cost. In the modified problem with one free bike from the first
+location to the second and parking penalties above ten bikes, the optimal
+policy changes: the agent is more willing to move bikes from location 1 to
+location 2 (to exploit the free transfer) and tries to keep overnight bike
+counts at or below ten to avoid the extra parking cost.
+
+\vspace{1em}
+
+\noindent\textbf{Conclusion:}\\
+This experiment illustrates how MDPs and dynamic programming can be used to
+solve sequential decision-making problems with stochastic dynamics. The
+gridworld example makes the effect of different reward functions on the
+optimal policy very clear, while the Gbike rental problem demonstrates policy
+iteration in a realistic resource allocation setting. Together, these
+experiments provide practical insight into value functions, Bellman equations
+and the role of discounting in reinforcement learning.
+
+\end{document}
