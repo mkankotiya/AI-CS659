@@ -1,0 +1,110 @@
+\documentclass[14pt]{extreport}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+
+\begin{document}
+
+\begin{center}
+\textbf{Experiment 7: MENACE and Multi-Armed Bandits}\\[0.8em]
+Manoj Kumar Panda -- 20251602013\\
+Meetkumar Kankotiya -- 20251602007\\
+Shrey Parikh -- 20251602017\\[0.5em]
+Group--10\\
+CS663 -- Artificial Intelligence\\
+Indian Institute of Information Technology Vadodara (IIITV)
+\end{center}
+
+\vspace{1em}
+
+\noindent\textbf{Abstract:}\\
+This experiment studies reinforcement learning through two core setups:
+multi-armed bandits and the Matchbox Educable Naughts and Crosses Engine
+(MENACE). Bandit problems are used to illustrate the exploration--exploitation
+tradeoff and non-stationary rewards, while MENACE demonstrates how a simple
+probabilistic mechanism can learn to play Tic-Tac-Toe. The Python
+implementation uses $\epsilon$-greedy agents for bandits and a bead-based
+policy for MENACE.
+
+\vspace{1em}
+
+\noindent\textbf{Introduction:}\\
+Reinforcement learning (RL) is concerned with how an agent learns to act by
+interacting with an environment and receiving feedback in the form of rewards.
+Two classic RL examples are multi-armed bandits and the MENACE system. Bandits
+capture the core exploration--exploitation dilemma in a very simple setting,
+while MENACE was one of the earliest physical implementations of a learning
+agent for game playing. In this experiment we implement both ideas in Python
+and observe how the behaviour of the agents changes over time.
+
+\vspace{1em}
+
+\noindent\textbf{Problem Description:}\\
+The work is divided into two parts:
+\begin{itemize}
+  \item \textbf{Binary and 10-armed bandits:} The agent repeatedly chooses one
+  of several actions (arms) and receives a stochastic reward. For the binary
+  bandit, rewards are Bernoulli with fixed success probabilities. For the
+  10-armed bandit, each arm's mean reward follows a random walk, making the
+  problem non-stationary.
+  \item \textbf{MENACE for Tic-Tac-Toe:} Game states correspond to board
+  configurations, and each state has a ``matchbox'' containing beads for each
+  legal move. Moves are sampled with probability proportional to the number of
+  beads. After each game, bead counts are reinforced or penalised depending on
+  whether MENACE wins, draws or loses.
+\end{itemize}
+
+\vspace{1em}
+
+\noindent\textbf{Algorithm:}\\
+For the bandit problems, we use the $\epsilon$-greedy strategy. With
+probability $\epsilon$ the agent explores by choosing a random action; with
+probability $1-\epsilon$ it exploits by choosing the action with the largest
+estimated value $Q(a)$. In the stationary binary bandit the estimates are
+updated using the sample average of observed rewards. For the non-stationary
+10-armed bandit, a constant step-size $\alpha$ is used so that old rewards are
+gradually forgotten.
+
+For MENACE, each visited state--action pair is recorded during the game. At the
+end of the game, bead counts are updated according to the outcome: winning
+moves receive a larger positive increment, drawn games receive a small
+increment, and losing moves are penalised but not allowed to go below one bead.
+This simple rule gradually biases MENACE towards better strategies.
+
+\vspace{1em}
+
+\noindent\textbf{Implementation:}\\
+The complete Python implementation (bandits and MENACE) for this experiment is
+available at the following URL:\\[0.3em]
+\hspace*{1em}\url{https://github.com/mkankotiya/AI-CS659/blob/main/search.py}
+
+\vspace{1em}
+
+\noindent\textbf{Results:}\\
+In the stationary binary bandit, the $\epsilon$-greedy agent quickly learns to
+prefer the arm with the higher success probability, and the average reward
+converges close to the optimal value. In the non-stationary 10-armed bandit,
+using a constant step-size allows the agent to track changing action values and
+recover when the identity of the best arm changes.
+
+For MENACE, the early games show many random and suboptimal moves. As more
+games are played and bead updates accumulate, MENACE begins to avoid losing
+lines and favour moves that lead to wins or draws. After sufficient training,
+the engine rarely loses against a random opponent and often forces at least a
+draw.
+
+\vspace{1em}
+
+\noindent\textbf{Conclusion:}\\
+This experiment demonstrates how simple RL algorithms can learn effective
+behaviour in both bandit settings and small games. The $\epsilon$-greedy
+method illustrates the exploration--exploitation balance and the importance of
+using appropriate updates for non-stationary environments. MENACE shows that
+even a straightforward bead-based reinforcement scheme can produce competent
+play in Tic-Tac-Toe. Together, these experiments provide an intuitive
+introduction to reinforcement learning concepts that underlie more advanced
+methods in artificial intelligence.
+
+\end{document}
